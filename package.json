@@ -1,0 +1,19 @@
+{
+  "name": "@local/model-thinking-levels",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Expose per-model thinking levels (reasoningEfforts) inside the Models settings card for a custom model API route.",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js"
+  },
+  "dsh": {
+    "bundle": { "patch": "./cordis.patch.yml" },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": ["@deepseek-ai/dsh-client-connection"]
+    }
+  }
+}
