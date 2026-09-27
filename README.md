@@ -73,7 +73,7 @@ node tools/probe-levels.mjs <baseURL> <model> [<model>...]
 ## 卸载
 
 ```bash
-dsh plugin --profile <profile> remove @local/model-thinking-levels
+dsh plugin --profile <profile> remove dsh-model-thinking-levels
 ```
 
 ## License

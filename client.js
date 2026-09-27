@@ -36,13 +36,13 @@
  * metadata.
  */
 window.__ModuleLoader__.load({
-  id: '@local/model-thinking-levels',
+  id: 'dsh-model-thinking-levels',
   factory(require) {
     const React = require('react');
     const h = React.createElement;
 
     /** Locale namespace, shared with the package name. */
-    const NS = '@local/model-thinking-levels';
+    const NS = 'dsh-model-thinking-levels';
     /** The one settings namespace that describes whole pi-ai routes. */
     const SETTINGS_NS = 'llm-pi-ai';
     /** The RPC channel the Host half answers on; see `index.js`. */

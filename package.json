@@ -1,9 +1,23 @@
 {
-  "name": "@local/model-thinking-levels",
+  "name": "dsh-model-thinking-levels",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "description": "Expose per-model thinking levels (reasoningEfforts) inside the Models settings card for a custom model API route.",
+  "license": "MIT",
+  "author": "Zessi-C",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zessi-C/dsh-model-thinking-levels.git"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "settings",
+    "models",
+    "reasoning-effort"
+  ],
   "exports": {
     ".": "./index.js",
     "./client": "./client.js"

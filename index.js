@@ -22,7 +22,7 @@
  * reads itself, so the channel cannot be turned into a way to make the Host
  * send someone's key somewhere else.
  *
- * @module @local/model-thinking-levels
+ * @module dsh-model-thinking-levels
  */
 
 /** RPC channel the Client half calls; a bare path, as the connection service requires. */
