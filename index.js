@@ -175,16 +175,32 @@ async function handleProbe(ctx, payload, signal) {
 
 /**
  * Register the probe channel once this deployment has a connection service.
- * `ctx.inject` keeps the plugin active without one, so the Client half still
- * renders — it just reports that detection is unavailable.
+ *
+ * A channel lands on the web server of the Context that reads the registry:
+ * `rpc.handle` resolves `owner.webServer`, where `owner` is the reading
+ * Context. Cordis refuses to read a service a Context never injected, so
+ * calling it from a Context that injected only `connection` throws
+ * `cannot get property "webServer" without inject` — inside this callback,
+ * where nothing surfaces it. The channel then simply never exists, and the
+ * browser's POST falls through to the static handler and comes back as
+ * `HTTP 405`. Reading the registry through a Context extended with
+ * `webServer` is what `dsh-mnemon` does, for the same reason.
+ *
+ * `ctx.inject` keeps the plugin active without a web server, so the Client half
+ * still renders — it just reports that detection is unavailable.
  * @param ctx - this plugin's context.
  */
 export function apply(ctx) {
-  ctx.inject(['connection'], (web) => {
-    web.effect(
-      () => web.connection.rpc.handle(CHANNEL, (endpoint, payload, signal) => {
+  ctx.inject(['connection', 'webServer'], (web) => {
+    const webServer = web.get('webServer');
+    if (webServer === undefined) return;
+    const owner = web.extend({ webServer });
+    const connection = owner.connection;
+    if (connection === undefined) return;
+    owner.effect(
+      () => connection.rpc.handle(CHANNEL, (endpoint, payload, signal) => {
         if (endpoint !== 'probe') return fail('bad-endpoint', `unknown endpoint ${JSON.stringify(endpoint)}`);
-        return handleProbe(web, payload, signal);
+        return handleProbe(owner, payload, signal);
       }),
       'model-thinking-levels: gateway level probe channel',
     );
